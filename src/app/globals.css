@@ -1,1 +1,145 @@
 @import "tailwindcss";
+
+@theme {
+  --color-paper: #ffffff;
+  --color-ink: #0f0f0f;
+  --color-brand: #005faf;
+  --color-sky: #62c3ff;
+  --color-accent: #ff0033;
+  --color-mist: #f2f7fb;
+
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+/* Design system: hard-shadow sticker card */
+.card-hard {
+  border: 2px solid #0f0f0f;
+  border-radius: 1rem;
+  box-shadow: 4px 4px 0 0 #0f0f0f;
+}
+
+/* Lenis smooth scroll — required styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Marquee ticker */
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-ticker {
+  animation: ticker 28s linear infinite;
+}
+
+/* Hero cartoon motion */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0) rotate(3deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(3deg);
+  }
+}
+
+.animate-float {
+  animation: float-y 5s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 14s linear infinite;
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg) scale(1.05);
+  }
+}
+
+.group:hover .animate-wiggle {
+  animation: wiggle 0.6s ease-in-out infinite;
+}
+
+/* Funky utilities */
+.marker-sky {
+  background-image: linear-gradient(
+    transparent 58%,
+    #62c3ff 58%,
+    #62c3ff 94%,
+    transparent 94%
+  );
+}
+
+.dots-bg {
+  background-image: radial-gradient(#005faf26 1.5px, transparent 1.6px);
+  background-size: 22px 22px;
+}
+
+.dots-bg-light {
+  background-image: radial-gradient(#ffffff1f 1.5px, transparent 1.6px);
+  background-size: 22px 22px;
+}
+
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid #005faf;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-ticker,
+  .animate-float,
+  .animate-spin-slow {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

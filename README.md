@@ -18,6 +18,18 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Live data
+
+Subscriber counts, lifetime views, and latest uploads refresh hourly
+(`revalidate: 3600` in `src/lib/youtube.ts`).
+
+- Set `YT_API_KEY` (see `.env.example`, free YouTube Data API v3 key) for
+  reliable live channel totals. Without it, the site falls back to the
+  public-page scrape plus snapshot seeds.
+- Studio breakdowns (geography, traffic sources, age/gender) are static
+  28-day snapshots in `src/data/channels.ts` — the public API can't provide
+  those; they need the channel owner's OAuth login.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
