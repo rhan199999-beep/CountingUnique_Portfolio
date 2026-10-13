@@ -2,19 +2,27 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { COUNTING_UNIQUE, PRANAY_GUPTA, PRANAY_AVATAR } from "@/data/channels";
 
 export default function Hero({ pgSubs }: { pgSubs: string }) {
   const reduceMotion = useReducedMotion();
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 1000);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <>
-      <section className="dots-bg bg-[#E9F4FE] px-5 pt-10 pb-14 sm:px-8 lg:px-12">
+      <section className="dots-bg bg-[#FFF3F0] px-5 pt-10 pb-14 sm:px-8 lg:px-12">
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1fr_360px]">
           <motion.div
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 24 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={false}
+            animate={visible || reduceMotion ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: reduceMotion ? 0 : 0.6, ease: "easeOut" }}
+            style={{ opacity: visible || reduceMotion ? 1 : undefined }}
           >
             <h1 className="font-display mt-5 text-balance text-6xl leading-[0.9] tracking-tight text-ink sm:text-7xl lg:text-8xl">
               Hey, I&apos;m{" "}
@@ -33,7 +41,7 @@ export default function Hero({ pgSubs }: { pgSubs: string }) {
                 href={COUNTING_UNIQUE.url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-accent px-8 text-[17px] font-semibold text-white shadow-[5px_5px_0_0_#0f0f0f] transition-transform hover:-translate-y-1 hover:rotate-1 focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="inline-flex min-h-[52px] items-center justify-center rounded-full bg-brand px-8 text-[17px] font-semibold text-white shadow-[5px_5px_0_0_#0f0f0f] transition-transform hover:-translate-y-1 hover:rotate-1 focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Subscribe on YouTube
               </a>
@@ -47,13 +55,14 @@ export default function Hero({ pgSubs }: { pgSubs: string }) {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={false}
+            animate={visible || reduceMotion ? { opacity: 1, y: 0 } : undefined}
             transition={{
               duration: reduceMotion ? 0 : 0.6,
               delay: reduceMotion ? 0 : 0.15,
               ease: "easeOut",
             }}
+            style={{ opacity: visible || reduceMotion ? 1 : undefined }}
             className={`group relative mx-auto w-64 sm:w-72 lg:w-full lg:max-w-[340px] ${
               reduceMotion ? "rotate-3" : "animate-float"
             }`}
@@ -73,12 +82,12 @@ export default function Hero({ pgSubs }: { pgSubs: string }) {
               width={512}
               height={512}
               priority
-              className="aspect-square w-full rounded-2xl border-[3px] border-ink object-cover shadow-[8px_8px_0_0_#005faf]"
+              className="aspect-square w-full rounded-2xl border-[3px] border-ink object-cover shadow-[8px_8px_0_0_#ff6b35]"
             />
             <span className="animate-wiggle absolute -bottom-4 -left-4 -rotate-3 rounded-lg border-2 border-ink bg-paper px-3 py-1 font-mono text-[13px] text-ink shadow-[3px_3px_0_0_#0f0f0f]">
               {PRANAY_GUPTA.handle}
             </span>
-            <span className="animate-wiggle absolute -right-3 -top-4 rotate-6 rounded-lg border-2 border-ink bg-accent px-3 py-1 font-mono text-[13px] text-white shadow-[3px_3px_0_0_#0f0f0f]">
+            <span className="animate-wiggle absolute -right-3 -top-4 rotate-6 rounded-lg border-2 border-ink bg-brand px-3 py-1 font-mono text-[13px] text-white shadow-[3px_3px_0_0_#0f0f0f]">
               {pgSubs} subs
             </span>
             {/* spinning cartoon badge */}
@@ -97,7 +106,7 @@ export default function Hero({ pgSubs }: { pgSubs: string }) {
               <span className="absolute text-2xl">▶</span>
             </span>
             {/* floating sparkles */}
-            <span aria-hidden className="absolute -left-8 top-8 hidden text-3xl text-accent sm:block">
+            <span aria-hidden className="absolute -left-8 top-8 hidden text-3xl text-brand sm:block">
               ✺
             </span>
             <span aria-hidden className="absolute -right-6 bottom-16 hidden rotate-12 text-2xl text-brand sm:block">

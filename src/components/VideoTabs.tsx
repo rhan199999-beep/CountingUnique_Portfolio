@@ -1,9 +1,12 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
 import { thumb, watchUrl, type FeedVideo } from "@/lib/youtube";
-import { COUNTING_UNIQUE, PRANAY_GUPTA, TOP_VIDEOS } from "@/data/channels";
+import { COUNTING_UNIQUE, PRANAY_GUPTA } from "@/data/channels";
+
+type Channel = {
+  name: string;
+  url: string;
+  searchUrl: string;
+};
 
 function formatDate(published: string): string {
   if (!published) return "YouTube";
@@ -45,9 +48,19 @@ function Thumb({ video, eager }: { video: FeedVideo; eager?: boolean }) {
   );
 }
 
-function Tag({ children }: { children: React.ReactNode }) {
+function Tag({
+  children,
+  tone = "pop",
+}: {
+  children: React.ReactNode;
+  tone?: "pop" | "dark";
+}) {
   return (
-    <span className="inline-block rounded-full border border-current px-2 py-0.5 font-mono text-[12px] opacity-70">
+    <span
+      className={`inline-block rounded-full border-2 border-ink px-2.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wide shadow-[2px_2px_0_0_#0f0f0f] ${
+        tone === "pop" ? "bg-[#FFD23F] text-ink" : "bg-ink text-white"
+      }`}
+    >
       {children}
     </span>
   );
@@ -67,134 +80,141 @@ function VideoCard({ video, channel }: { video: FeedVideo; channel: string }) {
       </span>
       <span className="block min-w-0 flex-1 p-4">
         <span className="flex flex-wrap gap-1.5 text-ink">
-          <Tag>{channel}</Tag>
-          <Tag>{formatDate(video.published)}</Tag>
+          <Tag tone="pop">{channel}</Tag>
+          <Tag tone="dark">{formatDate(video.published)}</Tag>
         </span>
         <span className="mt-2 line-clamp-2 block text-[15px] font-medium leading-snug text-ink">
           {video.title}
         </span>
-        {video.description ? (
-          <span className="mt-1 line-clamp-2 block text-[14px] font-medium leading-relaxed text-ink/80">
-            {video.description}
-          </span>
-        ) : null}
       </span>
     </a>
   );
 }
 
+function ChannelPanel({
+  videos,
+  channel,
+}: {
+  videos: FeedVideo[];
+  channel: Channel;
+}) {
+  if (videos.length === 0) {
+    return (
+      <div className="max-w-[62ch]">
+        <p className="text-[15px] leading-relaxed text-white/70">
+          The live feed for {channel.name} is unreachable right now. New
+          uploads appear here automatically once it reconnects.
+        </p>
+        <a
+          href={channel.url}
+          target="_blank"
+          rel="noreferrer"
+          className="mt-4 inline-flex min-h-[44px] items-center justify-center rounded-full bg-accent px-6 text-[15px] font-semibold text-white shadow-[4px_4px_0_0_rgba(255,255,255,0.25)] transition-transform hover:-translate-y-0.5"
+        >
+          Open {channel.name} on YouTube →
+        </a>
+      </div>
+    );
+  }
+  return (
+    <div className="min-w-0">
+      <a
+        href={watchUrl(videos[0].id)}
+        target="_blank"
+        rel="noreferrer"
+        className="group grid min-w-0 grid-cols-1 overflow-hidden rounded-2xl border-2 border-white/90 bg-paper shadow-[6px_6px_0_0_#62c3ff] lg:grid-cols-[1.2fr_1fr]"
+      >
+        <span className="relative block min-w-0">
+          <Thumb video={videos[0]} eager />
+          <PlayButton big />
+        </span>
+        <span className="flex min-w-0 flex-col justify-center gap-2 border-t-2 border-white/90 p-6 sm:p-8 lg:border-l-2 lg:border-t-0">
+          <span className="font-mono text-[13px] text-brand">LATEST DROP</span>
+          <span className="font-display block text-2xl leading-tight text-ink sm:text-3xl">
+            {videos[0].title}
+          </span>
+          <span className="mt-1 flex flex-wrap gap-1.5 text-ink">
+            <Tag tone="pop">{channel.name}</Tag>
+            <Tag tone="dark">{formatDate(videos[0].published)}</Tag>
+          </span>
+        </span>
+      </a>
+      <div className="mt-4 grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {videos.slice(1).map((v) => (
+          <VideoCard key={v.id} video={v} channel={channel.name} />
+        ))}
+      </div>
+      <div className="mt-8 flex flex-wrap items-center gap-4">
+        <a
+          href={channel.searchUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex min-h-[44px] items-center text-[14px] font-medium text-white/70 underline decoration-sky decoration-2 underline-offset-4 hover:text-sky"
+        >
+          Browse everything from {channel.name} ↗
+        </a>
+        <a
+          href={channel.url}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-accent px-6 text-[15px] font-semibold text-white shadow-[4px_4px_0_0_rgba(255,255,255,0.25)] transition-transform hover:-translate-y-0.5"
+        >
+          Open {channel.name} on YouTube →
+        </a>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Channel tabs built on native radio inputs + pure CSS — switching tabs
+ * only checks a radio button, so the page never reloads, never scrolls,
+ * and works with JavaScript disabled. ?channel=pg pre-selects PG.
+ */
 export default function VideoTabs({
   cuVideos,
   pgVideos,
+  initialTab,
 }: {
   cuVideos: FeedVideo[];
   pgVideos: FeedVideo[];
+  initialTab: "cu" | "pg";
 }) {
-  const [tab, setTab] = useState<"cu" | "pg">("cu");
-  const active = tab === "cu" ? cuVideos : pgVideos;
-  const channel = tab === "cu" ? COUNTING_UNIQUE : PRANAY_GUPTA;
-
   return (
-    <div className="min-w-0">
-      <div role="tablist" aria-label="Channels" className="flex flex-wrap gap-2">
-        {(
-          [
-            { id: "cu", label: "Counting Unique" },
-            { id: "pg", label: "Pranay Gupta" },
-          ] as const
-        ).map((t) => (
-          <button
-            key={t.id}
-            role="tab"
-            aria-selected={tab === t.id}
-            onClick={() => setTab(t.id)}
-            className={`inline-flex min-h-[44px] items-center rounded-full px-5 text-[15px] font-medium transition-all ${
-              tab === t.id
-                ? "bg-white text-ink shadow-[3px_3px_0_0_#62c3ff]"
-                : "border border-white/30 text-white hover:border-white/60 hover:bg-white/10"
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
+    <fieldset className="m-0 flex min-w-0 flex-wrap items-center gap-3 border-0 p-0">
+      <legend className="sr-only">Channels</legend>
+      <input
+        type="radio"
+        name="latest-channel"
+        id="tab-cu"
+        defaultChecked={initialTab === "cu"}
+        className="sr-only"
+      />
+      <label
+        htmlFor="tab-cu"
+        className="font-display tablabel-cu inline-flex min-h-[52px] -rotate-2 cursor-pointer items-center rounded-2xl border-[3px] border-white/30 bg-transparent px-6 text-lg font-extrabold tracking-tight text-white uppercase transition-all hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/10"
+      >
+        Counting Unique
+      </label>
+      <input
+        type="radio"
+        name="latest-channel"
+        id="tab-pg"
+        defaultChecked={initialTab === "pg"}
+        className="sr-only"
+      />
+      <label
+        htmlFor="tab-pg"
+        className="font-display tablabel-pg inline-flex min-h-[52px] rotate-2 cursor-pointer items-center rounded-2xl border-[3px] border-white/30 bg-transparent px-6 text-lg font-extrabold tracking-tight text-white uppercase transition-all hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/10"
+      >
+        Pranay Gupta
+      </label>
+      <div className="panel-cu mt-6 hidden w-full">
+        <ChannelPanel videos={cuVideos} channel={COUNTING_UNIQUE} />
       </div>
-
-      {active.length > 0 ? (
-        <div className="min-w-0">
-          <a
-            href={watchUrl(active[0].id)}
-            target="_blank"
-            rel="noreferrer"
-            className="group mt-6 grid min-w-0 grid-cols-1 overflow-hidden rounded-2xl border-2 border-white/90 bg-paper shadow-[6px_6px_0_0_#62c3ff] lg:grid-cols-[1.2fr_1fr]"
-          >
-            <span className="relative block min-w-0">
-              <Thumb video={active[0]} eager />
-              <PlayButton big />
-            </span>
-            <span className="flex min-w-0 flex-col justify-center gap-2 border-t-2 border-white/90 p-6 sm:p-8 lg:border-l-2 lg:border-t-0">
-              <span className="font-mono text-[13px] text-brand">LATEST DROP</span>
-              <span className="font-display block text-2xl leading-tight text-ink sm:text-3xl">
-                {active[0].title}
-              </span>
-              {active[0].description ? (
-                <span className="line-clamp-3 block text-[15px] font-medium leading-relaxed text-ink/80">
-                  {active[0].description}
-                </span>
-              ) : null}
-              <span className="mt-1 flex flex-wrap gap-1.5 text-ink">
-                <Tag>{channel.name}</Tag>
-                <Tag>{formatDate(active[0].published)}</Tag>
-              </span>
-            </span>
-          </a>
-          <div className="mt-4 grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {active.slice(1).map((v) => (
-              <VideoCard key={v.id} video={v} channel={channel.name} />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className="mt-8">
-          <p className="max-w-[62ch] text-[15px] leading-relaxed text-white/70">
-            Live feed unreachable right now — showing the top Studio titles
-            instead. New uploads appear here automatically once the feed
-            reconnects.
-          </p>
-          <ol className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {TOP_VIDEOS.map((v, i) => (
-              <li
-                key={v.title}
-                className="rounded-2xl border border-ink/15 bg-paper p-5"
-              >
-                <p className="font-mono text-[13px] text-brand">
-                  0{i + 1} · {v.views} views
-                </p>
-                <p className="mt-2 text-[15px] font-medium leading-snug text-ink">
-                  {v.title}
-                </p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      )}
-
-      <a
-        href={channel.searchUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-4 inline-block text-[14px] font-medium text-white/70 underline decoration-sky decoration-2 underline-offset-4 hover:text-sky"
-      >
-        Browse everything from {channel.name} ↗
-      </a>
-
-      <a
-        href={channel.url}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-8 inline-flex min-h-[44px] items-center justify-center rounded-full bg-accent px-6 text-[15px] font-semibold text-white shadow-[4px_4px_0_0_rgba(255,255,255,0.25)] transition-transform hover:-translate-y-0.5"
-      >
-        Open {channel.name} on YouTube →
-      </a>
-    </div>
+      <div className="panel-pg mt-6 hidden w-full">
+        <ChannelPanel videos={pgVideos} channel={PRANAY_GUPTA} />
+      </div>
+    </fieldset>
   );
 }

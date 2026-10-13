@@ -3,7 +3,7 @@
 @theme {
   --color-paper: #ffffff;
   --color-ink: #0f0f0f;
-  --color-brand: #005faf;
+  --color-brand: #ff6b35;
   --color-sky: #62c3ff;
   --color-accent: #ff0033;
   --color-mist: #f2f7fb;
@@ -111,8 +111,26 @@ img {
   );
 }
 
+.marker-yellow {
+  background-image: linear-gradient(
+    transparent 55%,
+    #ffd23f 55%,
+    #ffd23f 95%,
+    transparent 95%
+  );
+}
+
+.marker-pink {
+  background-image: linear-gradient(
+    transparent 55%,
+    #ff6b9d 55%,
+    #ff6b9d 95%,
+    transparent 95%
+  );
+}
+
 .dots-bg {
-  background-image: radial-gradient(#005faf26 1.5px, transparent 1.6px);
+  background-image: radial-gradient(#ff6b3526 1.5px, transparent 1.6px);
   background-size: 22px 22px;
 }
 
@@ -123,7 +141,35 @@ img {
 
 /* Visible keyboard focus everywhere */
 :focus-visible {
-  outline: 2px solid #005faf;
+  outline: 2px solid #ff6b35;
+  outline-offset: 2px;
+}
+
+/* CSS-only channel tabs (Latest section): native radio inputs drive the
+   panels, so switching tabs never reloads or scrolls the page and works
+   with JavaScript disabled. */
+#tab-cu:checked ~ .panel-cu,
+#tab-pg:checked ~ .panel-pg {
+  display: block;
+}
+
+#tab-cu:checked + .tablabel-cu {
+  border-color: #0f0f0f;
+  background-color: #ffd23f;
+  color: #0f0f0f;
+  box-shadow: 4px 4px 0 0 #62c3ff;
+}
+
+#tab-pg:checked + .tablabel-pg {
+  border-color: #0f0f0f;
+  background-color: #62c3ff;
+  color: #0f0f0f;
+  box-shadow: 4px 4px 0 0 #ffd23f;
+}
+
+#tab-cu:focus-visible + .tablabel-cu,
+#tab-pg:focus-visible + .tablabel-pg {
+  outline: 2px solid #62c3ff;
   outline-offset: 2px;
 }
 

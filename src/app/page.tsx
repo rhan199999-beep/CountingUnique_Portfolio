@@ -14,11 +14,18 @@ import {
 
 const WHATSAPP_CHANNEL = "https://whatsapp.com/channel/0029VaBLucwHQbRvDBsxOh2Y";
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ channel?: string }>;
+}) {
   // Independent fetches in parallel — no waterfalls.
   // Live totals via Data API when YT_API_KEY is set; otherwise the
   // scrape/seed fallbacks below keep the page rendering.
-  const [cuSnap, pgSnap, cuVideos, pgVideos, cuStats, pgStats] = await Promise.all([
+  // ?channel=pg deep-links straight to the Pranay Gupta tab so each
+  // channel's videos render server-side, even with JavaScript disabled.
+  const [{ channel: channelParam }, cuSnap, pgSnap, cuVideos, pgVideos, cuStats, pgStats] = await Promise.all([
+    searchParams,
     getChannelSnapshot(COUNTING_UNIQUE.url, COUNTING_UNIQUE.handle, {
       subs: COUNTING_UNIQUE.fallbackSubs,
       videos: COUNTING_UNIQUE.fallbackVideos,
@@ -36,6 +43,7 @@ export default async function Home() {
   ]);
   const cuSubs = cuStats?.subs ?? cuSnap.subs;
   const pgSubs = pgStats?.subs ?? pgSnap.subs;
+  const initialTab = channelParam === "pg" ? ("pg" as const) : ("cu" as const);
   return (
     <main id="top">
       <script
@@ -75,20 +83,27 @@ export default async function Home() {
             </div>
           </div>
           <div className="max-w-[62ch]">
-            <p className="text-[18px] font-medium leading-relaxed text-ink/85">
+            <p className="font-display text-xl font-bold leading-snug tracking-tight text-ink sm:text-2xl">
               My name is Pranay Gupta. I run two YouTube channels:{" "}
               <span className="inline-block -rotate-1 rounded-lg border-2 border-ink bg-[#FFD23F] px-2 font-extrabold text-ink shadow-[3px_3px_0_0_#0f0f0f]">
                 Counting Unique
               </span>{" "}
-              ({cuSubs} subscribers) for long experiments and reality
-              checks, and{" "}
+              <span className="marker-yellow whitespace-nowrap">
+                ({cuSubs} subscribers)
+              </span>{" "}
+              for long experiments and reality checks, and{" "}
               <span className="marker-sky font-extrabold text-ink">@saypranay</span>{" "}
-              ({pgSubs} subscribers) for Shorts and vlogs.
+              <span className="marker-yellow whitespace-nowrap">
+                ({pgSubs} subscribers)
+              </span>{" "}
+              for Shorts and vlogs.
             </p>
-            <p className="mt-4 text-[18px] font-medium leading-relaxed text-ink/85">
-              I take crazy ideas seriously — testing them on camera so you
-              don&apos;t have to. If it&apos;s unbelievable, I&apos;ve probably
-              already filmed it.
+            <p className="font-display mt-5 text-xl font-bold leading-snug tracking-tight text-ink sm:text-2xl">
+              I take <span className="marker-pink">crazy ideas</span>{" "}
+              seriously —{" "}
+              <span className="marker-yellow">testing them on camera</span> so
+              you don&apos;t have to. If it&apos;s unbelievable, I&apos;ve
+              probably already filmed it.
             </p>
             <div className="mt-6 grid grid-cols-2 gap-4">
               <div className="rotate-1 rounded-2xl border-2 border-ink bg-white p-4 shadow-[4px_4px_0_0_#0f0f0f]">
@@ -197,7 +212,7 @@ export default async function Home() {
           </p>
           </Reveal>
           <div className="mt-8">
-            <VideoTabs cuVideos={cuVideos} pgVideos={pgVideos} />
+            <VideoTabs cuVideos={cuVideos} pgVideos={pgVideos} initialTab={initialTab} />
           </div>
         </div>
       </section>

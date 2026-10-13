@@ -13,7 +13,6 @@ import {
   PG_CITIES,
   PG_KPIS,
   PG_AUDIENCE,
-  PERIOD_LABEL,
 } from "@/data/channels";
 
 type Slice = { label: string; pct: number };
@@ -195,7 +194,6 @@ export default function Analytics() {
           <h2 className="font-display text-5xl leading-[0.9] font-extrabold tracking-tight sm:text-7xl">
             Studio <span className="text-sky">reports.</span>
           </h2>
-          <p className="font-mono text-[13px] text-white/55">{PERIOD_LABEL}</p>
         </div>
 
         {/* channel tabs */}

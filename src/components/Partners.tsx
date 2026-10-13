@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { PARTNERS, partnerSearchUrl } from "@/data/partners";
 import { COUNTING_UNIQUE } from "@/data/channels";
 
@@ -13,9 +14,15 @@ import { COUNTING_UNIQUE } from "@/data/channels";
 
 export default function Partners() {
   const reduceMotion = useReducedMotion();
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 1000);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
-    <section id="partners" className="relative scroll-mt-20 overflow-hidden border-t-2 border-ink bg-[#C6F5D5]">
+    <section id="partners" className="relative scroll-mt-20 overflow-hidden border-t-2 border-ink bg-brand/10">
       {/* subtle dot texture */}
       <span
         aria-hidden
@@ -26,16 +33,10 @@ export default function Partners() {
         }}
       />
       <div className="relative mx-auto max-w-6xl px-5 pt-12 pb-14 sm:px-8 lg:px-12">
-        <p className="-rotate-2 inline-block rounded-xl border-2 border-ink bg-ink px-4 py-1.5 text-sm font-extrabold tracking-wide text-white uppercase shadow-[3px_3px_0_0_#ffffff]">
-          ★ Paid collabs, not ad reads ★
-        </p>
         <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
           <h2 className="font-display max-w-[18ch] text-5xl leading-[0.9] font-extrabold tracking-tight text-ink sm:text-6xl">
             Brands we&apos;ve collaborated with.
           </h2>
-          <p className="rotate-1 rounded-full border-2 border-ink bg-ink px-4 py-1.5 font-mono text-[13px] font-semibold text-white shadow-[3px_3px_0_0_#ffffff]">
-            {String(PARTNERS.length).padStart(2, "0")} BRANDS ✺ TAP A LOGO TO VERIFY
-          </p>
         </div>
         <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
           {PARTNERS.map((p, i) => (
@@ -45,7 +46,7 @@ export default function Partners() {
               target="_blank"
               rel="noreferrer"
               aria-label={`${p.name} videos on Counting Unique`}
-              initial={{ opacity: 0, y: reduceMotion ? 0 : 24 }}
+              initial={false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{
@@ -53,6 +54,7 @@ export default function Partners() {
                 delay: reduceMotion ? 0 : (i % 5) * 0.05,
                 ease: "easeOut",
               }}
+              style={{ opacity: visible || reduceMotion ? 1 : undefined }}
               className="group flex min-w-0 items-center justify-center px-2"
             >
               <Image
@@ -61,7 +63,7 @@ export default function Partners() {
                 width={280}
                 height={112}
                 loading="lazy"
-                className="max-h-16 w-auto max-w-[190px] object-contain transition-transform duration-200 group-hover:scale-110"
+                className="max-h-24 w-auto max-w-[220px] object-contain transition-transform duration-200 group-hover:scale-110"
                 draggable={false}
               />
             </motion.a>

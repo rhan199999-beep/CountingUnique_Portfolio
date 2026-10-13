@@ -63,10 +63,16 @@ test.describe("portfolio", () => {
     await expect(
       page.getByRole("heading", { name: /fresh off youtube/i })
     ).toBeVisible();
-    await expect(page.locator("#latest").getByRole("tab", { name: "Pranay Gupta" })).toBeVisible();
+    await expect(page.locator("#latest").getByRole("radio", { name: "Pranay Gupta" })).toBeVisible();
     // Live feed cards or curated fallback list — content either way.
     const items = page.locator("#latest a[href*='youtube.com'], #latest li");
     await expect(items.first()).toBeVisible();
+    // Switching tabs swaps channels with no navigation and no scroll jump.
+    const y0 = await page.evaluate(() => window.scrollY);
+    await page.locator("#latest").getByRole("radio", { name: "Pranay Gupta" }).check();
+    await expect(page.locator("#latest .panel-pg")).toBeVisible();
+    await expect(page.locator("#latest .panel-cu")).toBeHidden();
+    expect(await page.evaluate(() => window.scrollY)).toBe(y0);
     await expect(
       page.getByRole("link", { name: /browse everything from/i })
     ).toHaveAttribute("href", /youtube\.com\/results/);
