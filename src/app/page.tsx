@@ -53,7 +53,7 @@ export default async function Home({
             "@context": "https://schema.org",
             "@type": "Person",
             name: "Pranay Gupta",
-            alternateName: ["Counting Unique", "@saypranay"],
+            alternateName: ["Counting Unique", "Saypranay"],
             jobTitle: "YouTuber",
             sameAs: [COUNTING_UNIQUE.url, PRANAY_GUPTA.url, WHATSAPP_CHANNEL],
           }),
@@ -92,7 +92,7 @@ export default async function Home({
                 ({cuSubs} subscribers)
               </span>{" "}
               for long experiments and reality checks, and{" "}
-              <span className="marker-sky font-extrabold text-ink">@saypranay</span>{" "}
+              <span className="marker-sky font-extrabold text-ink">Saypranay</span>{" "}
               <span className="marker-yellow whitespace-nowrap">
                 ({pgSubs} subscribers)
               </span>{" "}
@@ -119,7 +119,7 @@ export default async function Home({
                   {pgSubs}
                 </p>
                 <p className="mt-1 text-[14px] font-semibold text-white/60">
-                  @saypranay subs
+                  Saypranay subs
                 </p>
               </div>
             </div>
@@ -239,7 +239,7 @@ export default async function Home({
                 rel="noreferrer"
                 className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-white/30 px-6 text-[15px] font-medium text-white hover:bg-white/10"
               >
-                @saypranay
+                Saypranay
               </a>
               <a
                 href={WHATSAPP_CHANNEL}

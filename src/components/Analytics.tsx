@@ -248,7 +248,7 @@ export default function Analytics() {
 
             {/* charts row 1 */}
             <div className="mt-5 grid gap-5 lg:grid-cols-2">
-              <Card title="Watch devices" tag={isCu ? "CU · watch time" : "@saypranay · watch time"}>
+              <Card title="Watch devices" tag={isCu ? "CU · watch time" : "Saypranay · watch time"}>
                 <Donut slices={isCu ? CU_DEVICES : PG_DEVICES} centerNote="on mobile" />
               </Card>
               <Card title={isCu ? "Top states" : "Top states"} tag="views share">

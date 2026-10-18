@@ -18,7 +18,7 @@ export const viewport = {
 export const metadata: Metadata = {
   title: "Counting Unique · Pranay Gupta — YouTube portfolio",
   description:
-    "Pranay Gupta runs Counting Unique and @saypranay on YouTube: live subscriber counts, latest uploads refreshed hourly, studio analytics, and brand collabs.",
+    "Pranay Gupta runs Counting Unique and Saypranay on YouTube: live subscriber counts, latest uploads refreshed hourly, studio analytics, and brand collabs.",
   openGraph: {
     title: "Counting Unique · Pranay Gupta",
     description:

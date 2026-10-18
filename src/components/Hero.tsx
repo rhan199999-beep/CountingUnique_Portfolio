@@ -33,7 +33,7 @@ export default function Hero({ pgSubs }: { pgSubs: string }) {
               <span className="marker-sky">lifestyle-based videos.</span>
             </h1>
             <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-ink/75 sm:text-lg">
-              Long experiments on Counting Unique. Shorts on @saypranay. New
+              Long experiments on Counting Unique. Shorts on Saypranay. New
               uploads land on this page by themselves.
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
