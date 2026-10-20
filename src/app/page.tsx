@@ -164,7 +164,7 @@ export default async function Home({
 
           <article className="bg-ink px-5 py-12 text-white sm:px-8 lg:px-12">
             <div className="mx-auto max-w-xl md:ml-0 md:mr-auto">
-              <p className="text-[15px] text-white/60">Shorts + vlogs · {PRANAY_GUPTA.handle}</p>
+              <p className="text-[15px] text-white/60">Shorts + vlogs · {PRANAY_GUPTA.handle.replace(/^@/, "")}</p>
               <p className="font-display mt-3 text-6xl tracking-tight sm:text-7xl">
                 {pgSubs}
               </p>

@@ -85,7 +85,7 @@ export default function Hero({ pgSubs }: { pgSubs: string }) {
               className="aspect-square w-full rounded-2xl border-[3px] border-ink object-cover shadow-[8px_8px_0_0_#ff6b35]"
             />
             <span className="animate-wiggle absolute -bottom-4 -left-4 -rotate-3 rounded-lg border-2 border-ink bg-paper px-3 py-1 font-mono text-[13px] text-ink shadow-[3px_3px_0_0_#0f0f0f]">
-              {PRANAY_GUPTA.handle}
+              {PRANAY_GUPTA.handle.replace(/^@/, "")}
             </span>
             <span className="animate-wiggle absolute -right-3 -top-4 rotate-6 rounded-lg border-2 border-ink bg-brand px-3 py-1 font-mono text-[13px] text-white shadow-[3px_3px_0_0_#0f0f0f]">
               {pgSubs} subs
