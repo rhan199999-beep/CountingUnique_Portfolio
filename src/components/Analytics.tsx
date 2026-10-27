@@ -51,13 +51,24 @@ function Bars({ rows, unit = "%" }: { rows: readonly BarRow[]; unit?: string }) 
   );
 }
 
+function computeSegments(slices: readonly Slice[], total: number) {
+  let acc = 0;
+  return slices.map((s, i) => {
+    const frac = s.pct / total;
+    const offset = acc;
+    acc += frac;
+    return { s, frac, offset, i };
+  });
+}
+
 /* Donut chart — pure SVG, no chart lib */
 function Donut({ slices, centerNote }: { slices: readonly Slice[]; centerNote: string }) {
   const reduceMotion = useReducedMotion();
   const total = slices.reduce((s, x) => s + x.pct, 0);
   const R = 54;
   const C = 2 * Math.PI * R;
-  let acc = 0;
+  const segments = computeSegments(slices, total);
+
   return (
     <div className="flex flex-col items-center gap-5 sm:flex-row sm:gap-7">
       <motion.svg
@@ -71,25 +82,20 @@ function Donut({ slices, centerNote }: { slices: readonly Slice[]; centerNote: s
         aria-label={`Device split, top share ${slices[0].label} ${slices[0].pct}%`}
       >
         <circle cx="70" cy="70" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="20" />
-        {slices.map((s, i) => {
-          const frac = s.pct / total;
-          const el = (
-            <circle
-              key={s.label}
-              cx="70"
-              cy="70"
-              r={R}
-              fill="none"
-              stroke={NEON[i % NEON.length]}
-              strokeWidth="20"
-              strokeDasharray={`${frac * C} ${C}`}
-              strokeDashoffset={-acc * C}
-              strokeLinecap="butt"
-            />
-          );
-          acc += frac;
-          return el;
-        })}
+        {segments.map(({ s, frac, offset, i }) => (
+          <circle
+            key={s.label}
+            cx="70"
+            cy="70"
+            r={R}
+            fill="none"
+            stroke={NEON[i % NEON.length]}
+            strokeWidth="20"
+            strokeDasharray={`${frac * C} ${C}`}
+            strokeDashoffset={-offset * C}
+            strokeLinecap="butt"
+          />
+        ))}
         <g className="rotate-90" style={{ transformOrigin: "70px 70px" }}>
           <text x="70" y="66" textAnchor="middle" fill="#fff" fontSize="22" fontWeight="800" fontFamily="inherit">
             {slices[0].pct}%

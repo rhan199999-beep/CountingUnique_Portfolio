@@ -9,7 +9,6 @@ import {
   COUNTING_UNIQUE,
   PRANAY_GUPTA,
   CU_AVATAR,
-  PERIOD_LABEL,
 } from "@/data/channels";
 
 const WHATSAPP_CHANNEL = "https://whatsapp.com/channel/0029VaBLucwHQbRvDBsxOh2Y";

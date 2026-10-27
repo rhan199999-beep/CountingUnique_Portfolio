@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="8 8 420 152" width="420" height="152" role="img" aria-label="Groww">
+  <defs>
+    <linearGradient id="growwGrad" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#4B5CF5"/>
+      <stop offset="0.55" stop-color="#2FA9A0"/>
+      <stop offset="1" stop-color="#16C79A"/>
+    </linearGradient>
+    <clipPath id="growwClip"><circle cx="85" cy="85" r="75"/></clipPath>
+  </defs>
+  <g clip-path="url(#growwClip)">
+    <rect x="10" y="10" width="150" height="150" fill="url(#growwGrad)"/>
+    <path d="M10 108 L52 78 L94 108 L136 78 L160 108 L160 160 L10 160 Z" fill="#ffffff" opacity="0.85"/>
+    <path d="M10 128 L52 98 L94 128 L136 98 L160 128 L160 160 L10 160 Z" fill="#ffffff" opacity="0.55"/>
+    <path d="M10 148 L52 118 L94 148 L136 118 L160 148 L160 160 L10 160 Z" fill="#ffffff" opacity="0.35"/>
+  </g>
+  <text x="178" y="110" font-family="Arial, Helvetica, sans-serif" font-size="82" font-weight="700" fill="#333333" letter-spacing="-1">Groww</text>
+</svg>

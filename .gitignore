@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# agents & local tooling
+.agents/
+
+# scratch test scripts & verification captures
+*-test.svg
+check-*.js
+crop-*.png
+full-partners.png
+crop.js
+measure-logos.js
+shot-partners.js
