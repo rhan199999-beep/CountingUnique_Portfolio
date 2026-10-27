@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { PARTNERS, partnerSearchUrl } from "@/data/partners";
+import { PARTNERS, partnerUrl } from "@/data/partners";
 import { COUNTING_UNIQUE } from "@/data/channels";
 
 /**
@@ -38,11 +38,11 @@ export default function Partners() {
             Brands we&apos;ve collaborated with.
           </h2>
         </div>
-        <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
           {PARTNERS.map((p, i) => (
             <motion.a
               key={p.name}
-              href={partnerSearchUrl(COUNTING_UNIQUE.handle, p.query)}
+              href={partnerUrl(COUNTING_UNIQUE.handle, p)}
               target="_blank"
               rel="noreferrer"
               aria-label={`${p.name} videos on Counting Unique`}
@@ -51,11 +51,11 @@ export default function Partners() {
               viewport={{ once: true, margin: "-40px" }}
               transition={{
                 duration: reduceMotion ? 0 : 0.4,
-                delay: reduceMotion ? 0 : (i % 5) * 0.05,
+                delay: reduceMotion ? 0 : (i % 6) * 0.05,
                 ease: "easeOut",
               }}
               style={{ opacity: visible || reduceMotion ? 1 : undefined }}
-              className="group flex min-w-0 items-center justify-center px-2"
+              className="group flex aspect-[16/9] w-full items-center justify-center rounded-xl border-2 border-ink bg-white p-3 shadow-[3px_3px_0_0_#0f0f0f] transition-transform duration-200 hover:-translate-y-1"
             >
               <Image
                 src={p.logo}
@@ -63,7 +63,7 @@ export default function Partners() {
                 width={280}
                 height={112}
                 loading="lazy"
-                className="max-h-24 w-auto max-w-[220px] object-contain transition-transform duration-200 group-hover:scale-110"
+                className="max-h-full max-w-full object-contain transition-transform duration-200 group-hover:scale-110"
                 draggable={false}
               />
             </motion.a>
