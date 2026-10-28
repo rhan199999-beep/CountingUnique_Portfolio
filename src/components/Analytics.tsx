@@ -197,7 +197,7 @@ export default function Analytics() {
           ★ STRAIGHT FROM YOUTUBE STUDIO
         </p>
         <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-display text-5xl leading-[0.9] font-extrabold tracking-tight sm:text-7xl">
+          <h2 className="font-display text-5xl font-extrabold leading-[0.9] tracking-tight sm:text-7xl">
             Studio <span className="text-sky">reports.</span>
           </h2>
         </div>
@@ -206,8 +206,8 @@ export default function Analytics() {
         <div role="tablist" aria-label="Channels" className="mt-8 flex flex-wrap gap-3">
           {(
             [
-              { id: "cu", label: "Counting Unique" },
-              { id: "pg", label: "Pranay Gupta" },
+              { id: "cu", label: "Counting Unique", tilt: "-rotate-2", on: "bg-[#FFD23F] text-ink shadow-[4px_4px_0_0_#62c3ff]" },
+              { id: "pg", label: "Pranay Gupta", tilt: "rotate-2", on: "bg-sky text-ink shadow-[4px_4px_0_0_#FFD23F]" },
             ] as const
           ).map((t) => (
             <button
@@ -215,10 +215,10 @@ export default function Analytics() {
               role="tab"
               aria-selected={tab === t.id}
               onClick={() => setTab(t.id)}
-              className={`font-display inline-flex min-h-[52px] items-center rounded-2xl border-2 px-6 text-lg font-extrabold tracking-tight transition-all ${
+              className={`font-display inline-flex min-h-[52px] items-center rounded-2xl border-[3px] px-6 text-lg font-extrabold tracking-tight uppercase transition-all hover:-translate-y-0.5 ${t.tilt} ${
                 tab === t.id
-                  ? "-rotate-1 border-ink bg-[#FFD23F] text-ink shadow-[4px_4px_0_0_#62c3ff]"
-                  : "border-white/25 text-white hover:border-white/60 hover:bg-white/10"
+                  ? `border-ink ${t.on}`
+                  : "border-white/25 bg-transparent text-white hover:border-white/60 hover:bg-white/10"
               }`}
             >
               {t.label}

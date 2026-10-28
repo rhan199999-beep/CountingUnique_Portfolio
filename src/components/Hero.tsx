@@ -16,7 +16,7 @@ export default function Hero({ pgSubs }: { pgSubs: string }) {
 
   return (
     <>
-      <section className="dots-bg bg-[#FFF3F0] px-5 pt-10 pb-14 sm:px-8 lg:px-12">
+      <section className="dots-bg bg-[#E9F4FE] px-5 pt-10 pb-14 sm:px-8 lg:px-12">
         <div className="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1fr_360px]">
           <motion.div
             initial={false}
@@ -24,17 +24,21 @@ export default function Hero({ pgSubs }: { pgSubs: string }) {
             transition={{ duration: reduceMotion ? 0 : 0.6, ease: "easeOut" }}
             style={{ opacity: visible || reduceMotion ? 1 : undefined }}
           >
-            <h1 className="font-display mt-5 text-balance text-6xl leading-[0.9] tracking-tight text-ink sm:text-7xl lg:text-8xl">
+            <h1 className="font-display mt-5 text-balance text-5xl font-extrabold leading-[0.95] tracking-tighter text-ink sm:text-6xl lg:text-7xl">
               Hey, I&apos;m{" "}
-              <span className="inline-block -rotate-2 rounded-2xl border-[3px] border-ink bg-[#FFD23F] px-3 shadow-[5px_5px_0_0_#0f0f0f]">
+              <span className="inline-block -rotate-2 rounded-2xl border-[3px] border-ink bg-[#FFD23F] px-3 shadow-[4px_4px_0_0_#0f0f0f]">
                 Pranay,
               </span>{" "}
-              making{" "}
-              <span className="marker-sky">lifestyle-based videos.</span>
+              <span className="marker-sky">making lifestyle-based videos.</span>
             </h1>
-            <p className="mt-6 max-w-[52ch] text-base leading-relaxed text-ink/75 sm:text-lg">
-              Long experiments on Counting Unique. Shorts on Saypranay. New
-              uploads land on this page by themselves.
+            <p className="font-display mt-6 max-w-[52ch] text-xl font-bold leading-snug tracking-tight text-ink/85 sm:text-2xl">
+              Long experiments on{" "}
+              <span className="marker-yellow font-extrabold text-ink">Counting Unique.</span>{" "}
+              Shorts on{" "}
+              <span className="marker-sky font-extrabold text-ink">Saypranay.</span>{" "}
+              <span className="inline-block -rotate-1 rounded-lg border-2 border-ink bg-[#FF6B9D] px-2 py-0.5 text-[13px] font-extrabold text-white shadow-[3px_3px_0_0_#0f0f0f]">
+                New uploads land here by themselves.
+              </span>
             </p>
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
               <a

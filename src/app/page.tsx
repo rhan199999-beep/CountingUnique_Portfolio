@@ -97,12 +97,19 @@ export default async function Home({
               </span>{" "}
               for Shorts and vlogs.
             </p>
-            <p className="font-display mt-5 text-xl font-bold leading-snug tracking-tight text-ink sm:text-2xl">
-              I take <span className="marker-pink">crazy ideas</span>{" "}
+            <p className="font-display mt-5 text-2xl font-extrabold leading-tight tracking-tight text-ink sm:text-4xl">
+              I take{" "}
+              <span className="inline-block -rotate-2 rounded-xl border-2 border-ink bg-[#FF6B9D] px-2 text-white shadow-[3px_3px_0_0_#0f0f0f]">
+                crazy ideas
+              </span>{" "}
               seriously —{" "}
-              <span className="marker-yellow">testing them on camera</span> so
-              you don&apos;t have to. If it&apos;s unbelievable, I&apos;ve
-              probably already filmed it.
+              <span className="inline-block rotate-1 rounded-xl border-2 border-ink bg-[#FFD23F] px-2 text-ink shadow-[3px_3px_0_0_#0f0f0f]">
+                testing them on camera
+              </span>{" "}
+              so you don&apos;t have to. If it&apos;s unbelievable,{" "}
+              <span className="marker-sky font-extrabold text-ink">
+                I&apos;ve already filmed it.
+              </span>
             </p>
             <div className="mt-6 grid grid-cols-2 gap-4">
               <div className="rotate-1 rounded-2xl border-2 border-ink bg-white p-4 shadow-[4px_4px_0_0_#0f0f0f]">
@@ -127,11 +134,12 @@ export default async function Home({
         </Reveal>
       </section>
 
-      <section id="channels" className="scroll-mt-20 border-b-2 border-ink">        <div className="grid md:grid-cols-2">
+      <section id="channels" className="scroll-mt-20 border-b-2 border-ink">
+        <div className="grid md:grid-cols-2">
           <article className="border-b-2 border-ink px-5 py-12 sm:px-8 md:border-b-0 md:border-r-2 lg:px-12">
             <div className="mx-auto max-w-xl md:ml-auto md:mr-0">
               <p className="text-[15px] text-ink/60">Long-form experiments · {COUNTING_UNIQUE.handle}</p>
-              <p className="font-display mt-3 text-6xl tracking-tight text-ink sm:text-7xl">
+              <p className="font-display mt-3 text-6xl font-extrabold tracking-tight text-ink sm:text-7xl">
                 {cuSubs}
               </p>
               <p className="mt-1 text-[15px] font-medium text-ink">subscribers on Counting Unique</p>
@@ -164,7 +172,7 @@ export default async function Home({
           <article className="bg-ink px-5 py-12 text-white sm:px-8 lg:px-12">
             <div className="mx-auto max-w-xl md:ml-0 md:mr-auto">
               <p className="text-[15px] text-white/60">Shorts + vlogs · {PRANAY_GUPTA.handle.replace(/^@/, "")}</p>
-              <p className="font-display mt-3 text-6xl tracking-tight sm:text-7xl">
+              <p className="font-display mt-3 text-6xl font-extrabold tracking-tight sm:text-7xl">
                 {pgSubs}
               </p>
               <p className="mt-1 text-[15px] font-medium text-white">subscribers on Pranay Gupta</p>
@@ -199,15 +207,14 @@ export default async function Home({
       <section id="latest" className="dots-bg-light scroll-mt-20 border-t-2 border-ink bg-ink text-white">
         <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-12">
           <Reveal>
-          <p className="inline-block rotate-2 rounded-lg border-2 border-sky bg-sky px-3 py-1 font-mono text-[13px] text-ink">
-            AUTO-UPDATING · HOURLY
-          </p>
-          <h2 className="font-display mt-4 text-4xl tracking-tight sm:text-5xl">
+          <h2 className="font-display mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
             Fresh off <span className="text-sky">YouTube</span>
           </h2>
-          <p className="mt-3 max-w-[62ch] leading-relaxed text-white/70">
-            Whatever went up last, lands here first. Switch tabs to jump
-            between the two channels.
+          <p className="font-display mt-3 max-w-[62ch] text-xl font-bold leading-snug tracking-tight text-white/85 sm:text-2xl">
+            <span className="marker-sky font-extrabold text-white">Whatever went up last</span>, lands here first.{" "}
+            <span className="inline-block -rotate-1 rounded-lg border-2 border-ink bg-[#FFD23F] px-2 py-0.5 text-[13px] font-extrabold text-ink shadow-[3px_3px_0_0_#62c3ff]">
+              Switch tabs to jump between the two channels.
+            </span>
           </p>
           </Reveal>
           <div className="mt-8">

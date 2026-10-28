@@ -34,7 +34,7 @@ export default function Partners() {
       />
       <div className="relative mx-auto max-w-6xl px-5 pt-12 pb-14 sm:px-8 lg:px-12">
         <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-display max-w-[18ch] text-5xl leading-[0.9] font-extrabold tracking-tight text-ink sm:text-6xl">
+          <h2 className="font-display max-w-[18ch] text-5xl font-extrabold leading-[0.9] tracking-tight text-ink sm:text-6xl">
             Brands we&apos;ve collaborated with.
           </h2>
         </div>
