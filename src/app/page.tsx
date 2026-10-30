@@ -88,12 +88,12 @@ export default async function Home({
                 Counting Unique
               </span>{" "}
               <span className="marker-yellow whitespace-nowrap">
-                ({cuSubs} subscribers)
+                ({cuSubs}+ subscribers)
               </span>{" "}
               for long experiments and reality checks, and{" "}
               <span className="marker-sky font-extrabold text-ink">Saypranay</span>{" "}
               <span className="marker-yellow whitespace-nowrap">
-                ({pgSubs} subscribers)
+                ({pgSubs}+ subscribers)
               </span>{" "}
               for Shorts and vlogs.
             </p>
@@ -114,7 +114,7 @@ export default async function Home({
             <div className="mt-6 grid grid-cols-2 gap-4">
               <div className="rotate-1 rounded-2xl border-2 border-ink bg-white p-4 shadow-[4px_4px_0_0_#0f0f0f]">
                 <p className="font-display text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-                  {cuSubs}
+                  {cuSubs}+
                 </p>
                 <p className="mt-1 text-[14px] font-semibold text-ink/60">
                   Counting Unique subs
@@ -122,7 +122,7 @@ export default async function Home({
               </div>
               <div className="-rotate-1 rounded-2xl border-2 border-ink bg-ink p-4 shadow-[4px_4px_0_0_#62c3ff]">
                 <p className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-                  {pgSubs}
+                  {pgSubs}+
                 </p>
                 <p className="mt-1 text-[14px] font-semibold text-white/60">
                   Saypranay subs

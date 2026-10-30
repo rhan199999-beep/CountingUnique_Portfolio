@@ -92,7 +92,7 @@ export default function Hero({ pgSubs }: { pgSubs: string }) {
               {PRANAY_GUPTA.handle.replace(/^@/, "")}
             </span>
             <span className="animate-wiggle absolute -right-3 -top-4 rotate-6 rounded-lg border-2 border-ink bg-brand px-3 py-1 font-mono text-[13px] text-white shadow-[3px_3px_0_0_#0f0f0f]">
-              {pgSubs} subs
+              {pgSubs}+ subs
             </span>
             {/* spinning cartoon badge */}
             <span
