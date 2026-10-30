@@ -150,30 +150,76 @@ function Audience({
   data: { male: number; female: number; ages: readonly { label: string; pct: number }[] };
 }) {
   const reduceMotion = useReducedMotion();
+  const total = data.male + data.female;
+  const R = 54;
+  const C = 2 * Math.PI * R;
+  const maleFrac = data.male / total;
+  const femaleFrac = data.female / total;
+
   return (
     <div>
-      <div className="grid grid-cols-2 gap-4">
-        {[
-          { label: "Male", pct: data.male, color: "#62c3ff" },
-          { label: "Female", pct: data.female, color: "#FF6B9D" },
-        ].map((g) => (
-          <div key={g.label} className="rounded-2xl border border-white/15 bg-ink p-4">
-            <p className="font-display text-4xl font-extrabold sm:text-5xl" style={{ color: g.color }}>
-              {g.pct}%
-            </p>
-            <p className="mt-1 text-[14px] font-semibold text-white/70">{g.label}</p>
-            <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
-              <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: `${g.pct}%` }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: reduceMotion ? 0 : 0.7, ease: "easeOut" }}
-                className="h-full rounded-full"
-                style={{ backgroundColor: g.color }}
-              />
-            </div>
-          </div>
-        ))}
+      <div className="flex flex-col items-center gap-5 sm:flex-row sm:gap-7">
+        <motion.svg
+          viewBox="0 0 140 140"
+          className="h-40 w-40 shrink-0 -rotate-90"
+          initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.85 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: reduceMotion ? 0 : 0.5, ease: "easeOut" }}
+          role="img"
+          aria-label={`Gender split, male ${data.male}%, female ${data.female}%`}
+        >
+          <circle cx="70" cy="70" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="20" />
+          <circle
+            cx="70"
+            cy="70"
+            r={R}
+            fill="none"
+            stroke="#62c3ff"
+            strokeWidth="20"
+            strokeDasharray={`${maleFrac * C} ${C}`}
+            strokeDashoffset={0}
+            strokeLinecap="butt"
+          />
+          <circle
+            cx="70"
+            cy="70"
+            r={R}
+            fill="none"
+            stroke="#FF6B9D"
+            strokeWidth="20"
+            strokeDasharray={`${femaleFrac * C} ${C}`}
+            strokeDashoffset={-maleFrac * C}
+            strokeLinecap="butt"
+          />
+          <g className="rotate-90" style={{ transformOrigin: "70px 70px" }}>
+            <text x="70" y="66" textAnchor="middle" fill="#fff" fontSize="16" fontWeight="800" fontFamily="inherit">
+              {data.male}%
+            </text>
+            <text x="70" y="84" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="10" fontFamily="inherit">
+              male
+            </text>
+          </g>
+        </motion.svg>
+        <ul className="w-full min-w-0 flex-1 space-y-2.5">
+          <li className="flex items-center gap-2.5 text-[15px]">
+            <span aria-hidden className="h-3.5 w-3.5 shrink-0 rounded-sm" style={{ backgroundColor: "#62c3ff" }} />
+            <span className="flex-1 text-white/85">Male</span>
+            <span className="font-mono text-[14px] font-semibold text-white">{data.male}%</span>
+          </li>
+          <li className="flex items-center gap-2.5 text-[15px]">
+            <span aria-hidden className="h-3.5 w-3.5 shrink-0 rounded-sm" style={{ backgroundColor: "#FF6B9D" }} />
+            <span className="flex-1 text-white/85">Female</span>
+            <span className="font-mono text-[14px] font-semibold text-white">{data.female}%</span>
+          </li>
+          {data.ages.map((a, i) => (
+            <li key={a.label} className="flex items-center gap-2.5 text-[15px]">
+              <span aria-hidden className="h-3.5 w-3.5 shrink-0 rounded-sm" style={{ backgroundColor: NEON[i % NEON.length] }} />
+              <span className="flex-1 text-white/85">{a.label}</span>
+              <span className="font-mono text-[14px] font-semibold text-white">{a.pct}%</span>
+            </li>
+          ))}
+        </ul>
       </div>
       <div className="mt-5">
         <Bars rows={data.ages} />

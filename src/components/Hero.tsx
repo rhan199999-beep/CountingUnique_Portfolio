@@ -82,7 +82,7 @@ export default function Hero({ pgSubs }: { pgSubs: string }) {
             />
             <Image
               src={PRANAY_AVATAR}
-              alt="Pranay Gupta"
+              alt="Pranay Gupta - YouTube creator"
               width={512}
               height={512}
               priority

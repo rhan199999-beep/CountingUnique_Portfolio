@@ -32,18 +32,26 @@ export default function Nav() {
           />
         </a>
 
-        <ul className="hidden items-center gap-2 md:flex">
-          {links.map((l) => (
-            <li key={l.href}>
-              <a
-                href={l.href}
-                className="font-display inline-flex min-h-[44px] items-center rounded-full border-2 border-transparent px-4 text-[16px] font-extrabold tracking-wide text-ink uppercase transition-all hover:-rotate-2 hover:border-ink hover:bg-[#FFD23F] hover:shadow-[3px_3px_0_0_#0f0f0f] focus-visible:outline-2"
-              >
-                {l.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden items-center gap-3 md:flex">
+          <a
+            href="#partners"
+            className="font-display inline-flex min-h-[40px] items-center rounded-full bg-brand px-5 text-[14px] font-bold tracking-wide text-white uppercase shadow-[3px_3px_0_0_#1a1a1a] transition-all hover:-translate-y-0.5"
+          >
+            Work with me
+          </a>
+          <ul className="hidden items-center gap-1 md:flex">
+            {links.map((l) => (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  className="font-display inline-flex min-h-[40px] items-center rounded-full px-4 text-[14px] font-bold tracking-wide text-ink/70 uppercase transition-all hover:text-ink"
+                >
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <button
           type="button"

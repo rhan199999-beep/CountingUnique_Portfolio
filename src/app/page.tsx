@@ -73,7 +73,7 @@ export default async function Home({
             <div className="mt-6 max-w-[360px] rotate-2 rounded-2xl border-2 border-ink bg-white p-2 shadow-[5px_5px_0_0_#0f0f0f] transition-transform hover:rotate-0">
               <Image
                 src={CU_AVATAR}
-                alt="Counting Unique channel photo"
+                alt="Counting Unique channel profile photo"
                 width={512}
                 height={512}
                 loading="lazy"
