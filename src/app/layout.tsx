@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Poppins } from "next/font/google";
 import SmoothScroll from "@/components/SmoothScroll";
 import Nav from "@/components/Nav";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({
+// Poppins mirrors the wordmark in /public/logo.png: geometric, circular
+// bowls and a smooth, rounded silhouette. Using one family for display and
+// body keeps every line on the page reading as the same voice.
+const display = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-display",
@@ -12,10 +15,11 @@ const display = Bricolage_Grotesque({
 });
 
 export const viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#eaf3fc",
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://counting-unique-portfolio.vercel.app"),
   title: "Counting Unique · Pranay Gupta — YouTube portfolio",
   description:
     "Pranay Gupta runs Counting Unique and Saypranay on YouTube: live subscriber counts, latest uploads refreshed hourly, studio analytics, and brand collabs.",

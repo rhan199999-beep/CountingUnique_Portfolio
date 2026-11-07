@@ -1,12 +1,17 @@
 @import "tailwindcss";
 
+/* Palette sampled from public/logo.png:
+   #0E69B4 is the wordmark blue, #6AC6FF the light blue in the mark.
+   Everything else is a neutral or the single action colour. */
 @theme {
   --color-paper: #ffffff;
-  --color-ink: #0f0f0f;
-  --color-brand: #ff6b35;
-  --color-sky: #62c3ff;
-  --color-accent: #ff0033;
-  --color-mist: #f2f7fb;
+  --color-mist: #eaf3fc;
+  --color-frost: #d5e9fa;
+  --color-ink: #08243f;
+  --color-brand: #0e69b4;
+  --color-brand-ink: #0a4e86;
+  --color-sky: #6ac6ff;
+  --color-action: #ff5c2b;
 
   --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-display), ui-sans-serif, system-ui, sans-serif;
@@ -15,9 +20,9 @@
 
 /* Design system: hard-shadow sticker card */
 .card-hard {
-  border: 2px solid #0f0f0f;
+  border: 2px solid #08243f;
   border-radius: 1rem;
-  box-shadow: 4px 4px 0 0 #0f0f0f;
+  box-shadow: 4px 4px 0 0 #08243f;
 }
 
 /* Lenis smooth scroll — required styles */
@@ -60,6 +65,59 @@ img {
 
 .animate-ticker {
   animation: ticker 28s linear infinite;
+}
+
+/* Soften the marquee edges so tiles dissolve instead of being cut in half */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    rgba(0, 0, 0, 0.06) 30px,
+    rgba(0, 0, 0, 0.45) 66px,
+    #000 120px,
+    #000 calc(100% - 120px),
+    rgba(0, 0, 0, 0.45) calc(100% - 66px),
+    rgba(0, 0, 0, 0.06) calc(100% - 30px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    rgba(0, 0, 0, 0.06) 30px,
+    rgba(0, 0, 0, 0.45) 66px,
+    #000 120px,
+    #000 calc(100% - 120px),
+    rgba(0, 0, 0, 0.45) calc(100% - 66px),
+    rgba(0, 0, 0, 0.06) calc(100% - 30px),
+    transparent 100%
+  );
+}
+
+@media (min-width: 640px) {
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      rgba(0, 0, 0, 0.06) 40px,
+      rgba(0, 0, 0, 0.45) 104px,
+      #000 200px,
+      #000 calc(100% - 200px),
+      rgba(0, 0, 0, 0.45) calc(100% - 104px),
+      rgba(0, 0, 0, 0.06) calc(100% - 40px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      rgba(0, 0, 0, 0.06) 40px,
+      rgba(0, 0, 0, 0.45) 104px,
+      #000 200px,
+      #000 calc(100% - 200px),
+      rgba(0, 0, 0, 0.45) calc(100% - 104px),
+      rgba(0, 0, 0, 0.06) calc(100% - 40px),
+      transparent 100%
+    );
+  }
 }
 
 /* Hero cartoon motion */
@@ -105,32 +163,23 @@ img {
 .marker-sky {
   background-image: linear-gradient(
     transparent 58%,
-    #62c3ff 58%,
-    #62c3ff 94%,
+    #6ac6ff 58%,
+    #6ac6ff 94%,
     transparent 94%
   );
 }
 
-.marker-yellow {
+.marker-brand {
   background-image: linear-gradient(
     transparent 55%,
-    #ffd23f 55%,
-    #ffd23f 95%,
-    transparent 95%
-  );
-}
-
-.marker-pink {
-  background-image: linear-gradient(
-    transparent 55%,
-    #ff6b9d 55%,
-    #ff6b9d 95%,
+    #bfe3ff 55%,
+    #bfe3ff 95%,
     transparent 95%
   );
 }
 
 .dots-bg {
-  background-image: radial-gradient(#ff6b3526 1.5px, transparent 1.6px);
+  background-image: radial-gradient(#0e69b41f 1.5px, transparent 1.6px);
   background-size: 22px 22px;
 }
 
@@ -141,7 +190,7 @@ img {
 
 /* Visible keyboard focus everywhere */
 :focus-visible {
-  outline: 2px solid #ff6b35;
+  outline: 2px solid #0e69b4;
   outline-offset: 2px;
 }
 
@@ -154,23 +203,127 @@ img {
 }
 
 #tab-cu:checked + .tablabel-cu {
-  border-color: #0f0f0f;
-  background-color: #ffd23f;
-  color: #0f0f0f;
-  box-shadow: 4px 4px 0 0 #62c3ff;
+  border-color: #08243f;
+  background-color: #6ac6ff;
+  color: #08243f;
+  box-shadow: 4px 4px 0 0 #ffffff;
 }
 
 #tab-pg:checked + .tablabel-pg {
-  border-color: #0f0f0f;
-  background-color: #62c3ff;
-  color: #0f0f0f;
-  box-shadow: 4px 4px 0 0 #ffd23f;
+  border-color: #08243f;
+  background-color: #ffffff;
+  color: #08243f;
+  box-shadow: 4px 4px 0 0 #6ac6ff;
 }
 
 #tab-cu:focus-visible + .tablabel-cu,
 #tab-pg:focus-visible + .tablabel-pg {
-  outline: 2px solid #62c3ff;
+  outline: 2px solid #6ac6ff;
   outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Video library — category filter (pure CSS, no JavaScript)
+   ========================================================================== */
+
+.catlabel {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 0.9rem;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.catlabel:hover {
+  border-color: rgba(255, 255, 255, 0.55);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.catlabel:focus-visible,
+input.sr-only:focus-visible + .catlabel {
+  outline: 2px solid #6ac6ff;
+  outline-offset: 2px;
+}
+
+/* Active chip — Counting Unique (light blue) */
+#filter-cu-all:checked ~ .catlabel-cu-all,
+#filter-cu-experiments:checked ~ .catlabel-cu-experiments,
+#filter-cu-travel:checked ~ .catlabel-cu-travel,
+#filter-cu-food:checked ~ .catlabel-cu-food,
+#filter-cu-money:checked ~ .catlabel-cu-money,
+#filter-cu-reality:checked ~ .catlabel-cu-reality,
+#filter-cu-shorts:checked ~ .catlabel-cu-shorts,
+#filter-cu-vlogs:checked ~ .catlabel-cu-vlogs {
+  border-color: #08243f;
+  background-color: #6ac6ff;
+  color: #08243f;
+  box-shadow: 3px 3px 0 0 #ffffff;
+}
+
+/* Active chip — Pranay Gupta (white) */
+#filter-pg-all:checked ~ .catlabel-pg-all,
+#filter-pg-experiments:checked ~ .catlabel-pg-experiments,
+#filter-pg-travel:checked ~ .catlabel-pg-travel,
+#filter-pg-food:checked ~ .catlabel-pg-food,
+#filter-pg-money:checked ~ .catlabel-pg-money,
+#filter-pg-reality:checked ~ .catlabel-pg-reality,
+#filter-pg-shorts:checked ~ .catlabel-pg-shorts,
+#filter-pg-vlogs:checked ~ .catlabel-pg-vlogs {
+  border-color: #08243f;
+  background-color: #ffffff;
+  color: #08243f;
+  box-shadow: 3px 3px 0 0 #6ac6ff;
+}
+
+/* Hide cards that don't carry the checked category. */
+#filter-cu-experiments:checked ~ .video-stack-cu .video-card:not(.vcat-experiments),
+#filter-cu-travel:checked ~ .video-stack-cu .video-card:not(.vcat-travel),
+#filter-cu-food:checked ~ .video-stack-cu .video-card:not(.vcat-food),
+#filter-cu-money:checked ~ .video-stack-cu .video-card:not(.vcat-money),
+#filter-cu-reality:checked ~ .video-stack-cu .video-card:not(.vcat-reality),
+#filter-cu-shorts:checked ~ .video-stack-cu .video-card:not(.vcat-shorts),
+#filter-cu-vlogs:checked ~ .video-stack-cu .video-card:not(.vcat-vlogs) {
+  display: none;
+}
+
+#filter-pg-experiments:checked ~ .video-stack-pg .video-card:not(.vcat-experiments),
+#filter-pg-travel:checked ~ .video-stack-pg .video-card:not(.vcat-travel),
+#filter-pg-food:checked ~ .video-stack-pg .video-card:not(.vcat-food),
+#filter-pg-money:checked ~ .video-stack-pg .video-card:not(.vcat-money),
+#filter-pg-reality:checked ~ .video-stack-pg .video-card:not(.vcat-reality),
+#filter-pg-shorts:checked ~ .video-stack-pg .video-card:not(.vcat-shorts),
+#filter-pg-vlogs:checked ~ .video-stack-pg .video-card:not(.vcat-vlogs) {
+  display: none;
+}
+
+/* ==========================================================================
+   Entrance motion — CSS-driven so content is never stuck at opacity 0
+   ========================================================================== */
+
+@keyframes rise-in {
+  from {
+    transform: translateY(14px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.rise-in {
+  animation: rise-in 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -179,7 +332,8 @@ img {
   }
   .animate-ticker,
   .animate-float,
-  .animate-spin-slow {
+  .animate-spin-slow,
+  .rise-in {
     animation: none;
   }
   *,

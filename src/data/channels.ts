@@ -6,13 +6,19 @@
  */
 export const PERIOD_LABEL = "Mar 31 – Apr 27, 2026 · last 28 days";
 
+/** Date of the Studio export behind the fallback charts. */
+export const STUDIO_UPDATED_AT = "2026-04-27";
+
+export const WHATSAPP_CHANNEL =
+  "https://whatsapp.com/channel/0029VaBLucwHQbRvDBsxOh2Y";
+
 export const COUNTING_UNIQUE = {
   name: "Counting Unique",
   handle: "@CountingUnique",
   url: "https://www.youtube.com/@CountingUnique",
   searchUrl: "https://www.youtube.com/results?search_query=counting+unique",
   channelId: "UCp57W-eQjbYUPJuTMEfbf1Q",
-  fallbackSubs: "4.61M",
+  fallbackSubs: "4.74M",
   fallbackVideos: "—",
   views28d: "41.1M",
   watchHours28d: "1.91M",
@@ -32,7 +38,7 @@ export const PRANAY_GUPTA = {
   url: "https://www.youtube.com/@saypranay",
   searchUrl: "https://www.youtube.com/results?search_query=pranay+gupta",
   channelId: "UCOwoozznw51Qc_fVaLYY9TA",
-  fallbackSubs: "8.71M",
+  fallbackSubs: "8.99M",
   fallbackVideos: "265",
   monthlyAudience: "17.0M",
   subsGained28d: "+85.7k",
@@ -90,17 +96,17 @@ export const TOP_VIDEOS = [
  * read straight off the YouTube Studio screenshots.
  */
 export const CU_KPIS = [
-  { value: "41.1M", label: "views in 28 days" },
-  { value: "1.91M", label: "watch hours" },
-  { value: "3:41", label: "average view duration" },
-  { value: "4.5%", label: "impressions click-through" },
+  { value: "41.1M", label: "Total views", hint: "all views across every video in 28 days" },
+  { value: "1.91M", label: "Watch hours", hint: "total time people spent watching" },
+  { value: "3:41", label: "Avg. view time", hint: "how long each viewer stays" },
+  { value: "4.5%", label: "Click-through rate", hint: "of viewers who saw a thumbnail clicked" },
 ] as const;
 
 export const PG_KPIS = [
-  { value: "98.4M", label: "Shorts views in 28 days" },
-  { value: "17.0M", label: "monthly audience" },
-  { value: "+117.9K", label: "new Shorts subscribers" },
-  { value: "78.5%", label: "watch time from non-subs" },
+  { value: "98.4M", label: "Shorts views", hint: "all Shorts views in 28 days" },
+  { value: "17.0M", label: "Monthly viewers", hint: "unique people who watched" },
+  { value: "+117.9K", label: "New subscribers", hint: "gained in 28 days" },
+  { value: "78.5%", label: "Non-sub watch time", hint: "watch time from people not yet subscribed" },
 ] as const;
 
 export const CU_GEO = [

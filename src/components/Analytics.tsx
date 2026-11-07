@@ -2,25 +2,14 @@
 
 import { useState } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
-import {
-  CU_DEVICES,
-  CU_DISCOVERY,
-  CU_STATES,
-  CU_KPIS,
-  CU_AUDIENCE,
-  PG_DEVICES,
-  PG_STATES,
-  PG_CITIES,
-  PG_KPIS,
-  PG_AUDIENCE,
-} from "@/data/channels";
+import type { StudioData } from "@/lib/studio";
 
 type Slice = { label: string; pct: number };
 type BarRow = { label: string; pct: number };
 
-const NEON = ["#FFD23F", "#62c3ff", "#FF6B9D", "#ffffff", "#8affc1"];
+const NEON = ["#6ac6ff", "#ffffff", "#3d93d6", "#a9daff", "#ff5c2b"];
 
-/* Chunky horizontal bars, widths relative to the top row */
+/* Chunky horizontal bars with gradient fills */
 function Bars({ rows, unit = "%" }: { rows: readonly BarRow[]; unit?: string }) {
   const reduceMotion = useReducedMotion();
   const max = Math.max(...rows.map((r) => r.pct));
@@ -42,7 +31,7 @@ function Bars({ rows, unit = "%" }: { rows: readonly BarRow[]; unit?: string }) 
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: reduceMotion ? 0 : 0.7, delay: reduceMotion ? 0 : i * 0.06, ease: "easeOut" }}
               className="h-full rounded-full"
-              style={{ backgroundColor: NEON[i % NEON.length] }}
+              style={{ background: `linear-gradient(90deg, ${NEON[i % NEON.length]}, ${NEON[(i + 1) % NEON.length]})` }}
             />
           </div>
         </div>
@@ -61,7 +50,7 @@ function computeSegments(slices: readonly Slice[], total: number) {
   });
 }
 
-/* Donut chart — pure SVG, no chart lib */
+/* Donut chart — pure SVG with gradient fills */
 function Donut({ slices, centerNote }: { slices: readonly Slice[]; centerNote: string }) {
   const reduceMotion = useReducedMotion();
   const total = slices.reduce((s, x) => s + x.pct, 0);
@@ -81,7 +70,15 @@ function Donut({ slices, centerNote }: { slices: readonly Slice[]; centerNote: s
         role="img"
         aria-label={`Device split, top share ${slices[0].label} ${slices[0].pct}%`}
       >
-        <circle cx="70" cy="70" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="20" />
+        <defs>
+          {NEON.map((c, i) => (
+            <linearGradient key={i} id={`grad-${i}`} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor={c} stopOpacity="1" />
+              <stop offset="100%" stopColor={NEON[(i + 1) % NEON.length]} stopOpacity="0.8" />
+            </linearGradient>
+          ))}
+        </defs>
+        <circle cx="70" cy="70" r={R} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="22" />
         {segments.map(({ s, frac, offset, i }) => (
           <circle
             key={s.label}
@@ -89,18 +86,18 @@ function Donut({ slices, centerNote }: { slices: readonly Slice[]; centerNote: s
             cy="70"
             r={R}
             fill="none"
-            stroke={NEON[i % NEON.length]}
-            strokeWidth="20"
+            stroke={`url(#grad-${i})`}
+            strokeWidth="22"
             strokeDasharray={`${frac * C} ${C}`}
             strokeDashoffset={-offset * C}
             strokeLinecap="butt"
           />
         ))}
         <g className="rotate-90" style={{ transformOrigin: "70px 70px" }}>
-          <text x="70" y="66" textAnchor="middle" fill="#fff" fontSize="22" fontWeight="800" fontFamily="inherit">
+          <text x="70" y="64" textAnchor="middle" fill="#fff" fontSize="24" fontWeight="800" fontFamily="inherit">
             {slices[0].pct}%
           </text>
-          <text x="70" y="84" textAnchor="middle" fill="rgba(255,255,255,0.6)" fontSize="11" fontFamily="inherit">
+          <text x="70" y="84" textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="10" fontFamily="inherit">
             {centerNote}
           </text>
         </g>
@@ -111,7 +108,7 @@ function Donut({ slices, centerNote }: { slices: readonly Slice[]; centerNote: s
             <span
               aria-hidden
               className="h-3.5 w-3.5 shrink-0 rounded-sm"
-              style={{ backgroundColor: NEON[i % NEON.length] }}
+              style={{ background: `linear-gradient(135deg, ${NEON[i % NEON.length]}, ${NEON[(i + 1) % NEON.length]})` }}
             />
             <span className="flex-1 text-white/85">{s.label}</span>
             <span className="font-mono text-[14px] font-semibold text-white">{s.pct}%</span>
@@ -126,13 +123,18 @@ function Card({
   title,
   tag,
   children,
+  glow,
 }: {
   title: string;
   tag: string;
   children: React.ReactNode;
+  glow?: string;
 }) {
   return (
-    <div className="min-w-0 rounded-3xl border-2 border-white/15 bg-white/[0.05] p-6 sm:p-7">
+    <div
+      className="min-w-0 rounded-3xl border-2 border-white/15 bg-white/[0.05] p-6 sm:p-7"
+      style={glow ? { boxShadow: `0 0 40px -10px ${glow}` } : undefined}
+    >
       <p className="inline-block -rotate-1 rounded-lg border border-white/25 px-2.5 py-0.5 font-mono text-[12px] font-semibold tracking-widest text-sky uppercase">
         {tag}
       </p>
@@ -169,14 +171,14 @@ function Audience({
           role="img"
           aria-label={`Gender split, male ${data.male}%, female ${data.female}%`}
         >
-          <circle cx="70" cy="70" r={R} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="20" />
+          <circle cx="70" cy="70" r={R} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="22" />
           <circle
             cx="70"
             cy="70"
             r={R}
             fill="none"
-            stroke="#62c3ff"
-            strokeWidth="20"
+            stroke="#6ac6ff"
+            strokeWidth="22"
             strokeDasharray={`${maleFrac * C} ${C}`}
             strokeDashoffset={0}
             strokeLinecap="butt"
@@ -186,8 +188,8 @@ function Audience({
             cy="70"
             r={R}
             fill="none"
-            stroke="#FF6B9D"
-            strokeWidth="20"
+            stroke="#ff5c2b"
+            strokeWidth="22"
             strokeDasharray={`${femaleFrac * C} ${C}`}
             strokeDashoffset={-maleFrac * C}
             strokeLinecap="butt"
@@ -203,57 +205,68 @@ function Audience({
         </motion.svg>
         <ul className="w-full min-w-0 flex-1 space-y-2.5">
           <li className="flex items-center gap-2.5 text-[15px]">
-            <span aria-hidden className="h-3.5 w-3.5 shrink-0 rounded-sm" style={{ backgroundColor: "#62c3ff" }} />
+            <span aria-hidden className="h-3.5 w-3.5 shrink-0 rounded-sm" style={{ backgroundColor: "#6ac6ff" }} />
             <span className="flex-1 text-white/85">Male</span>
             <span className="font-mono text-[14px] font-semibold text-white">{data.male}%</span>
           </li>
           <li className="flex items-center gap-2.5 text-[15px]">
-            <span aria-hidden className="h-3.5 w-3.5 shrink-0 rounded-sm" style={{ backgroundColor: "#FF6B9D" }} />
+            <span aria-hidden className="h-3.5 w-3.5 shrink-0 rounded-sm" style={{ backgroundColor: "#ff5c2b" }} />
             <span className="flex-1 text-white/85">Female</span>
             <span className="font-mono text-[14px] font-semibold text-white">{data.female}%</span>
           </li>
-          {data.ages.map((a, i) => (
-            <li key={a.label} className="flex items-center gap-2.5 text-[15px]">
-              <span aria-hidden className="h-3.5 w-3.5 shrink-0 rounded-sm" style={{ backgroundColor: NEON[i % NEON.length] }} />
-              <span className="flex-1 text-white/85">{a.label}</span>
-              <span className="font-mono text-[14px] font-semibold text-white">{a.pct}%</span>
-            </li>
-          ))}
         </ul>
       </div>
-      <div className="mt-5">
+      <div className="mt-5 border-t border-white/10 pt-4">
+        <p className="mb-3 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-white/40">
+          Age split
+        </p>
         <Bars rows={data.ages} />
       </div>
     </div>
   );
 }
 
-const KPI_SHADOWS = ["#62c3ff", "#FFD23F", "#FF6B9D", "#ffffff"];
+const KPI_SHADOWS = ["#6ac6ff", "#ffffff", "#6ac6ff", "#ffffff"];
 
-export default function Analytics() {
+export default function Analytics({ cu, pg }: { cu: StudioData; pg: StudioData }) {
   const [tab, setTab] = useState<"cu" | "pg">("cu");
   const reduceMotion = useReducedMotion();
   const isCu = tab === "cu";
-  const kpis = isCu ? CU_KPIS : PG_KPIS;
+  const data = isCu ? cu : pg;
+  const kpis = data.kpis;
+  const live = cu.live && pg.live;
 
   return (
-    <section id="numbers" className="dots-bg-light scroll-mt-20 border-t-2 border-ink bg-ink text-white">
-      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8 lg:px-12">
-        <p className="inline-block -rotate-1 rounded-xl border-2 border-ink bg-[#FFD23F] px-4 py-1.5 font-mono text-[13px] font-bold text-ink shadow-[3px_3px_0_0_#62c3ff]">
-          ★ STRAIGHT FROM YOUTUBE STUDIO
-        </p>
-        <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-display text-5xl font-extrabold leading-[0.9] tracking-tight sm:text-7xl">
-            Studio <span className="text-sky">reports.</span>
-          </h2>
+    <section id="numbers" className="dots-bg-light scroll-mt-24 border-b-2 border-ink bg-ink text-white">
+      <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16 lg:px-12">
+        {/* Header */}
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="inline-block -rotate-1 rounded-xl border-2 border-ink bg-sky px-4 py-1.5 font-mono text-[13px] font-bold text-ink shadow-[3px_3px_0_0_#0e69b4]">
+              STRAIGHT FROM YOUTUBE STUDIO
+            </p>
+            <h2 className="font-display mt-5 text-5xl font-extrabold leading-[0.9] tracking-tight sm:text-7xl">
+              Studio <span className="text-sky">reports.</span>
+            </h2>
+          </div>
+          <div className="flex flex-col items-end gap-2">
+            <span className="block w-fit rounded-full border border-white/20 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-sky">
+              {live ? "● Live · refreshed daily" : "Snapshot"} · {cu.updatedAt}
+            </span>
+          </div>
         </div>
+        <p className="mt-4 max-w-[58ch] text-[14px] leading-relaxed text-white/55">
+          The last 28 days across both channels, read straight off the Studio
+          dashboard. Numbers update automatically when connected to YouTube
+          Analytics.
+        </p>
 
         {/* channel tabs */}
         <div role="tablist" aria-label="Channels" className="mt-8 flex flex-wrap gap-3">
           {(
             [
-              { id: "cu", label: "Counting Unique", tilt: "-rotate-2", on: "bg-[#FFD23F] text-ink shadow-[4px_4px_0_0_#62c3ff]" },
-              { id: "pg", label: "Pranay Gupta", tilt: "rotate-2", on: "bg-sky text-ink shadow-[4px_4px_0_0_#FFD23F]" },
+              { id: "cu", label: "Counting Unique", tilt: "-rotate-2", on: "bg-brand text-white shadow-[4px_4px_0_0_#6ac6ff]" },
+              { id: "pg", label: "Pranay Gupta", tilt: "rotate-2", on: "bg-sky text-ink shadow-[4px_4px_0_0_#ffffff]" },
             ] as const
           ).map((t) => (
             <button
@@ -280,47 +293,67 @@ export default function Analytics() {
             exit={{ opacity: 0, y: reduceMotion ? 0 : -12 }}
             transition={{ duration: reduceMotion ? 0 : 0.3, ease: "easeOut" }}
           >
-            {/* KPI strip */}
-            <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-              {kpis.map((k, i) => (
+            {/* Headline KPI — the biggest number */}
+            <div className="mt-8 rounded-3xl border-2 border-white/15 bg-gradient-to-br from-white/[0.08] to-white/[0.02] p-6 sm:p-8">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-white/40">
+                    {isCu ? "Total views in 28 days" : "Shorts views in 28 days"}
+                  </p>
+                  <p className="font-display mt-2 text-6xl font-extrabold tracking-tight text-white sm:text-8xl">
+                    {kpis[0].value}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-1 sm:text-right">
+                  <p className="font-display text-[15px] font-extrabold text-sky">
+                    {kpis[0].label}
+                  </p>
+                  <p className="font-display text-[12px] font-medium italic leading-snug text-sky/80">
+                    {kpis[0].hint}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* KPI strip — remaining 3 metrics */}
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {kpis.slice(1).map((k, i) => (
                 <div
                   key={k.label}
-                  className={`rounded-2xl border-2 border-ink bg-white p-5 text-ink ${
-                    i % 2 === 0 ? "rotate-1" : "-rotate-1"
-                  }`}
-                  style={{ boxShadow: `5px 5px 0 0 ${KPI_SHADOWS[i % KPI_SHADOWS.length]}` }}
+                  className="group rounded-2xl border-2 border-white/15 bg-white/[0.06] p-5 text-white transition-all hover:bg-white/[0.1]"
                 >
-                  <p className="font-display text-4xl font-extrabold tracking-tight sm:text-5xl">
+                  <p className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
                     {k.value}
                   </p>
-                  <p className="mt-1.5 text-[14px] leading-snug font-medium text-ink/60">{k.label}</p>
+                  <p className="mt-1.5 font-mono text-[12px] font-bold uppercase tracking-[0.12em] text-white/80">{k.label}</p>
+                  <p className="mt-1 font-display text-[11px] font-medium italic leading-snug text-sky/60">{k.hint}</p>
                 </div>
               ))}
             </div>
 
             {/* charts row 1 */}
-            <div className="mt-5 grid gap-5 lg:grid-cols-2">
-              <Card title="Watch devices" tag={isCu ? "CU · watch time" : "Saypranay · watch time"}>
-                <Donut slices={isCu ? CU_DEVICES : PG_DEVICES} centerNote="on mobile" />
+            <div className="mt-6 grid gap-5 lg:grid-cols-2">
+              <Card title="Watch devices" tag={isCu ? "CU · watch time" : "Saypranay · watch time"} glow="#6ac6ff">
+                <Donut slices={data.devices} centerNote="on mobile" />
               </Card>
-              <Card title={isCu ? "Top states" : "Top states"} tag="views share">
-                <Bars rows={isCu ? CU_STATES : PG_STATES} />
+              <Card title="Top states" tag="views share" glow="#a9daff">
+                <Bars rows={data.states} />
               </Card>
             </div>
 
             {/* charts row 2 */}
             <div className="mt-5 grid gap-5 lg:grid-cols-2">
-              <Card title="Who watches" tag="gender + age">
-                <Audience data={isCu ? CU_AUDIENCE : PG_AUDIENCE} />
+              <Card title="Who watches" tag="gender + age" glow="#ff5c2b">
+                <Audience data={data.audience} />
               </Card>
               {isCu ? (
-                <Card title="How they find us" tag="traffic sources">
-                  <Bars rows={CU_DISCOVERY} />
+                <Card title="How they find us" tag="traffic sources" glow="#3d93d6">
+                  <Bars rows={data.discovery ?? []} />
                 </Card>
               ) : (
-                <Card title="Top cities" tag="millions of views">
+                <Card title="Top cities" tag="millions of views" glow="#3d93d6">
                   <div className="space-y-4">
-                    {PG_CITIES.map((c, i) => (
+                    {(data.cities ?? []).map((c, i) => (
                       <div key={c.label} className="flex items-baseline gap-3">
                         <span className="font-mono text-[13px] font-bold" style={{ color: NEON[i % NEON.length] }}>
                           0{i + 1}

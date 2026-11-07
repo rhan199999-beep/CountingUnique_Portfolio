@@ -25,8 +25,11 @@ export const PARTNERS: Partner[] = [
   { name: "Flipkart", logo: "/partners/flipkart.png", query: "Flipkart", videoUrl: "https://www.youtube.com/watch?v=BwFZyecMZL4" },
   { name: "Amazon", logo: "/partners/amazon.png", query: "Amazon", videoUrl: "https://www.youtube.com/watch?v=ASMmBa7xybw" },
   { name: "Myntra", logo: "/partners/myntra.png", query: "Myntra" },
-  { name: "Groww", logo: "/partners/groww.svg", query: "Groww" },
+  { name: "Groww", logo: "/partners/groww.png", query: "Groww" },
   { name: "vivo", logo: "/partners/vivo.svg", query: "vivo" },
+  { name: "Blinkit", logo: "/partners/blinkit.svg", query: "Blinkit" },
+  { name: "Swiggy", logo: "/partners/swiggy.svg", query: "Swiggy" },
+  { name: "Zomato", logo: "/partners/zomato.svg", query: "Zomato" },
 ];
 
 export function partnerUrl(handle: string, p: Partner): string {
