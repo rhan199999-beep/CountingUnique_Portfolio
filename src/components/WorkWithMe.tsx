@@ -1,5 +1,4 @@
 import { COUNTING_UNIQUE, WHATSAPP_CHANNEL } from "@/data/channels";
-import { PARTNERS } from "@/data/partners";
 import Reveal from "./Reveal";
 
 /**
@@ -51,7 +50,7 @@ export default function WorkWithMe({ cuSubs }: { cuSubs: string }) {
             {[
               [`${cuSubs}+`, "subscribers on Counting Unique"],
               [COUNTING_UNIQUE.views28d, "views in the last 28 days"],
-              [String(PARTNERS.length), "brand collaborations"],
+              ["active", "brand collaborations"],
             ].map(([value, label], i) => (
               <div
                 key={label}

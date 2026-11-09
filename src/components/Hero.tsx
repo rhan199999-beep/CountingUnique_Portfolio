@@ -79,10 +79,10 @@ export default function Hero({
           </div>
 
           <h1
-            className="font-display mt-4 min-h-[9.5625rem] text-balance text-[2.5rem] font-extrabold leading-[0.95] tracking-tight text-ink min-[360px]:min-h-[7.25rem] min-[430px]:min-h-[5rem] sm:mt-5 sm:min-h-[7.25rem] sm:text-6xl lg:min-h-[16.375rem] lg:text-[4.35rem]"
+            className="font-display mt-4 min-h-[9.5625rem] text-balance text-[2.5rem] font-extrabold leading-[1.05] tracking-tight text-ink min-[360px]:min-h-[7.25rem] min-[430px]:min-h-[5rem] sm:mt-5 sm:min-h-[7.25rem] sm:text-6xl lg:min-h-[16.375rem] lg:text-[4.35rem]"
           >
             Hey, I&apos;m{" "}
-            <span className="mr-1 inline-block -rotate-2 rounded-2xl border-[3px] border-ink bg-brand px-2.5 text-white shadow-[4px_4px_0_0_#08243f] sm:px-3">
+            <span className="mr-2 inline-block -rotate-2 rounded-2xl border-[3px] border-ink bg-brand px-2.5 text-white shadow-[4px_4px_0_0_#08243f] sm:px-3">
               Pranay.
             </span>{" "}
             I film the{" "}
@@ -100,7 +100,7 @@ export default function Hero({
           </p>
 
           <div
-            className="rise-in mt-6 grid grid-cols-2 gap-2 sm:mt-7 sm:flex sm:items-center sm:gap-3"
+            className="rise-in mt-6 flex flex-col gap-2 sm:mt-7 sm:flex sm:flex-row sm:items-center sm:gap-3"
             style={{ animationDelay: "180ms" }}
           >
             <a
@@ -113,33 +113,7 @@ export default function Hero({
               <span className="sm:hidden">Watch latest</span>
               <span className="hidden sm:inline">Watch latest video</span>
             </a>
-            <a
-              href={COUNTING_UNIQUE.url}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex min-h-[54px] items-center justify-center rounded-full border-[3px] border-ink bg-white px-3 text-[13px] font-extrabold text-ink shadow-[4px_4px_0_0_#0e69b4] transition-transform hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 sm:px-6 sm:text-[15px]"
-            >
-              Subscribe · {cuSubs}+
-            </a>
           </div>
-
-          <dl
-            className="mt-8 hidden flex-wrap items-center gap-x-6 gap-y-3 border-t-2 border-ink/10 pt-5 sm:flex"
-          >
-            {[
-              [`${cuSubs}+`, "on Counting Unique"],
-              [`${pgSubs}+`, "on Saypranay"],
-            ].map(([value, label]) => (
-              <div key={label} className="flex items-baseline gap-2">
-                <dt className="font-display text-xl font-extrabold tracking-tight text-ink sm:text-2xl">
-                  {value}
-                </dt>
-                <dd className="text-[12px] font-medium leading-tight text-ink/65 sm:text-[13px]">
-                  {label}
-                </dd>
-              </div>
-            ))}
-          </dl>
         </div>
 
         <Parallax strength={16} className="min-w-0">

@@ -153,12 +153,14 @@ export default async function Home() {
                     Long-form
                   </span>
                 </div>
-                <p className="font-display mt-4 text-5xl font-extrabold tracking-tight sm:text-6xl">
-                  {cuSubs}+
-                </p>
-                <p className="mt-1 text-sm font-medium text-ink/60">
-                  subscribers on Counting Unique
-                </p>
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <p className="font-display text-5xl font-extrabold tracking-tight sm:text-6xl">
+                    {cuSubs}+
+                  </p>
+                  <span className="inline-flex shrink-0 items-center rounded-full border-2 border-ink bg-brand px-3 py-1 text-[12px] font-extrabold uppercase tracking-wide text-ink shadow-[3px_3px_0_0_#08243f]">
+                    Counting Unique
+                  </span>
+                </div>
                 {/* Stats row */}
                 <div className="mt-5 flex items-center gap-3">
                   <div className="flex-1 rounded-xl bg-brand/10 px-3 py-2.5 text-center">
@@ -211,12 +213,14 @@ export default async function Home() {
                     Shorts + vlogs
                   </span>
                 </div>
-                <p className="font-display mt-4 text-5xl font-extrabold tracking-tight sm:text-6xl">
-                  {pgSubs}+
-                </p>
-                <p className="mt-1 text-sm font-medium text-white/55">
-                  subscribers on Saypranay
-                </p>
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <p className="font-display text-5xl font-extrabold tracking-tight sm:text-6xl">
+                    {pgSubs}+
+                  </p>
+                  <span className="inline-flex shrink-0 items-center rounded-full border-2 border-white/30 bg-white/10 px-3 py-1 text-[12px] font-extrabold uppercase tracking-wide text-white shadow-[3px_3px_0_0_#62C3FF]">
+                    Saypranay
+                  </span>
+                </div>
                 {/* Stats row */}
                 <div className="mt-5 flex items-center gap-3">
                   <div className="flex-1 rounded-xl bg-white/10 px-3 py-2.5 text-center">
