@@ -31,7 +31,7 @@ export default function Nav() {
             width={1646}
             height={804}
             priority
-            style={{ height: 52, width: "auto" }}
+            style={{ height: 60, width: "auto" }}
           />
         </a>
 

@@ -18,6 +18,7 @@ import {
   PRANAY_GUPTA,
   CU_AVATAR,
   WHATSAPP_CHANNEL,
+  INSTAGRAM_CHANNEL,
 } from "@/data/channels";
 
 export const revalidate = 3600;
@@ -67,7 +68,7 @@ export default async function Home() {
             name: "Pranay Gupta",
             alternateName: ["Counting Unique", "Saypranay"],
             jobTitle: "YouTuber",
-            sameAs: [COUNTING_UNIQUE.url, PRANAY_GUPTA.url, WHATSAPP_CHANNEL],
+            sameAs: [COUNTING_UNIQUE.url, PRANAY_GUPTA.url, WHATSAPP_CHANNEL, INSTAGRAM_CHANNEL],
           }),
         }}
       />
@@ -146,8 +147,8 @@ export default async function Home() {
             >
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-ink/60">
-                    {COUNTING_UNIQUE.handle}
+                  <p className="font-display text-[11px] font-bold uppercase tracking-[0.18em] text-ink/60">
+                    {COUNTING_UNIQUE.handle.replace("@", "")}
                   </p>
                   <span className="rounded-full border-2 border-ink bg-sky px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-ink">
                     Long-form
@@ -206,8 +207,8 @@ export default async function Home() {
             >
               <div>
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-white/60">
-                    {PRANAY_GUPTA.handle}
+                  <p className="font-display text-[11px] font-bold uppercase tracking-[0.18em] text-white/60">
+                    {PRANAY_GUPTA.handle.replace("@", "")}
                   </p>
                   <span className="rounded-full border-2 border-white/25 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-white/80">
                     Shorts + vlogs
@@ -332,6 +333,14 @@ export default async function Home() {
               className="inline-flex min-h-[48px] items-center justify-center rounded-full border-2 border-white/30 px-6 text-[15px] font-semibold text-white hover:bg-white/10"
             >
               WhatsApp channel
+            </a>
+            <a
+              href={INSTAGRAM_CHANNEL}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-[48px] items-center justify-center rounded-full border-2 border-white/30 px-6 text-[15px] font-semibold text-white hover:bg-white/10"
+            >
+              Instagram
             </a>
           </div>
           <div className="mt-12 flex flex-col gap-2 border-t border-white/15 pt-6 text-[13px] text-white/55 sm:flex-row sm:items-center sm:justify-between">

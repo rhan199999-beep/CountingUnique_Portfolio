@@ -249,18 +249,7 @@ export default function Analytics({ cu, pg }: { cu: StudioData; pg: StudioData }
               Studio <span className="text-sky">reports.</span>
             </h2>
           </div>
-          <div className="flex flex-col items-end gap-2">
-            <span className="block w-fit rounded-full border border-white/20 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-sky">
-              {live ? "● Live · refreshed daily" : "Snapshot"} · {cu.updatedAt}
-            </span>
-          </div>
         </div>
-        <p className="mt-4 max-w-[58ch] text-[14px] leading-relaxed text-white/55">
-          The last 28 days across both channels, read straight off the Studio
-          dashboard. Numbers update automatically when connected to YouTube
-          Analytics.
-        </p>
-
         {/* channel tabs */}
         <div role="tablist" aria-label="Channels" className="mt-8 flex flex-wrap gap-3">
           {(

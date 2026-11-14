@@ -222,8 +222,60 @@ async function getChannelPageVideos(
     clearTimeout(t);
     if (!res.ok) return [];
     const html = await res.text();
-    const blob = html.match(/var ytInitialData = (\{[\s\S]*?\});<\/script>/);
-    if (!blob) return [];
+    let data: any = null;
+
+    // Strategy 1: Find 'ytInitialData' and extract JSON by brace matching
+    const ytIdx = html.indexOf('ytInitialData');
+    if (ytIdx >= 0) {
+      const braceStart = html.indexOf('{', ytIdx);
+      if (braceStart >= 0) {
+        let depth = 0;
+        let braceEnd = -1;
+        for (let i = braceStart; i < html.length; i++) {
+          if (html[i] === '{') depth++;
+          else if (html[i] === '}') {
+            depth--;
+            if (depth === 0) { braceEnd = i; break; }
+          }
+        }
+        if (braceEnd >= 0) {
+          try {
+            const parsed = JSON.parse(html.slice(braceStart, braceEnd + 1));
+            // Only use if it contains lockupViewModel data
+            if (JSON.stringify(parsed).includes('lockupViewModel')) {
+              data = parsed;
+            }
+          } catch {}
+        }
+      }
+    }
+
+
+    // Strategy 3: Extract video IDs and titles via regex
+    if (!data) {
+      const ids = [...html.matchAll(/"contentId":"([^"]+)"/g)].map(m => m[1]);
+      const titles = [...html.matchAll(/"title":\{"content":"([^"]+)"/g)].map(m => m[1]);
+      if (ids.length > 0 && titles.length > 0) {
+        const out: FeedVideo[] = [];
+        const seen = new Set<string>();
+        for (let i = 0; i < Math.min(ids.length, titles.length); i++) {
+          if (seen.has(ids[i])) continue;
+          seen.add(ids[i]);
+          out.push({
+            id: ids[i],
+            title: decodeEntities(titles[i]),
+            published: "",
+            description: "",
+          });
+          if (out.length >= limit) break;
+        }
+        return out;
+      }
+    }
+
+    if (!data) {
+      return [];
+    }
 
     const out: FeedVideo[] = [];
     const walk = (node: unknown) => {
@@ -253,7 +305,28 @@ async function getChannelPageVideos(
       }
       for (const value of Object.values(record)) walk(value);
     };
-    walk(JSON.parse(blob[1]));
+    walk(data);
+    
+    // Strategy 3: If walk found nothing, try regex extraction
+    if (out.length === 0) {
+      const ids = [...html.matchAll(/"contentId":"([^"]+)"/g)].map(m => m[1]);
+      const titles = [...html.matchAll(/"title":\{"content":"([^"]+)"/g)].map(m => m[1]);
+      if (ids.length > 0 && titles.length > 0) {
+        const seen = new Set<string>();
+        for (let i = 0; i < Math.min(ids.length, titles.length); i++) {
+          if (seen.has(ids[i])) continue;
+          seen.add(ids[i]);
+          out.push({
+            id: ids[i],
+            title: decodeEntities(titles[i]),
+            published: "",
+            description: "",
+          });
+          if (out.length >= limit) break;
+        }
+      }
+    }
+    
     return out;
   } catch {
     return [];

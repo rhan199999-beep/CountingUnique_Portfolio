@@ -12,13 +12,16 @@ export const STUDIO_UPDATED_AT = "2026-04-27";
 export const WHATSAPP_CHANNEL =
   "https://whatsapp.com/channel/0029VaBLucwHQbRvDBsxOh2Y";
 
+export const INSTAGRAM_CHANNEL =
+  "https://www.instagram.com/counting.unique?obrf=MThwMXBtd2pzNXVxcw==";
+
 export const COUNTING_UNIQUE = {
   name: "Counting Unique",
   handle: "@CountingUnique",
   url: "https://www.youtube.com/@CountingUnique",
   searchUrl: "https://www.youtube.com/results?search_query=counting+unique",
   channelId: "UCp57W-eQjbYUPJuTMEfbf1Q",
-  fallbackSubs: "4.74M",
+  fallbackSubs: "9.0M",
   fallbackVideos: "—",
   views28d: "41.1M",
   watchHours28d: "1.91M",
